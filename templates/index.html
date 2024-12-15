@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Weather App</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+            const dayAfterTomorrow = days[(new Date().getDay() + 2) % 7]; 
+            document.getElementById("day-after-tomorrow").textContent = dayAfterTomorrow; 
+        });
+    </script>
+</head>
+<body>
+    <h1 style="font-size:300%;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;text-align: center;">WEATHER TODAY</h1></br></br></br>
+    {% if weather_data %}
+        {% if 'error' in weather_data %}
+            <p>{{ weather_data['error'] }}</p>
+        {% else %}
+            <p id="city">{{ weather_data['location']['name'] }}</p>
+            <p id="place">{{ weather_data['location']['region'] }} {{ weather_data['location']['country'] }}</p>
+            <center>
+                <div class="main">
+                    </br></br>
+                    <h1 id="temp">{{ weather_data['current']['temp_c'] | round(0, 'floor') | int }}°</h1>
+                    <p>{{ weather_data['current']['condition']['text'] }}  {{weather_data['forecast']['forecastday'][0]['day']['maxtemp_c'] | round(0, 'floor') | int }}°/{{ weather_data['forecast']['forecastday'][0]['day']['mintemp_c'] | round(0, 'floor') | int }}°</p>
+                    </br>
+                    <div style="height: 30px;width: 130px ;" class="child">
+                        <img src="/static/l.png">
+                        <p>AQI {{ weather_data['current']['air_quality']['pm2_5'] | round(0, 'floor') | int }}</p> 
+                    </div>
+                    </br></br></br></br></br></br></br></br></br></br>
+                    <div class="child forecast">
+                        <table>
+                            <tr>
+                                <td>Today</td>
+                                <td style="width: 50%;"><img src="{{ weather_data['current']['condition']['icon'] }}" alt="Weather Icon"></td>
+                                <td style="width: 10%;">{{weather_data['forecast']['forecastday'][0]['day']['mintemp_c'] | round(0, 'floor') | int }}°</td>
+                                <td style="width: 10%;"><div class="gradient-bar"></div></td>
+                                <td style="width: 10%;">{{ weather_data['forecast']['forecastday'][0]['day']['maxtemp_c'] | round(0, 'floor') | int }}°</td>
+                            </tr>
+                            <tr>
+                                <td>Tommorow</td>
+                                <td style="width: 50%;"><img src="{{ weather_data['current']['condition']['icon'] }}" alt="Weather Icon"></td>
+                                <td style="width: 10%;">{{ weather_data['forecast']['forecastday'][1]['day']['mintemp_c'] | round(0, 'floor') | int }}°</td>
+                                <td style="width: 10%;"><div class="gradient-bar"></div></td>
+                                <td style="width: 10%;">{{ weather_data['forecast']['forecastday'][1]['day']['maxtemp_c'] | round(0, 'floor') | int }}°</td>
+                            </tr>
+                            <tr>
+                                <td id="day-after-tomorrow"></td>
+                                <td style="width: 50%;"><img src="{{ weather_data['current']['condition']['icon'] }}" alt="Weather Icon"></td>
+                                <td style="width: 10%;">{{weather_data['forecast']['forecastday'][2]['day']['mintemp_c'] | round(0, 'floor') | int }}°</td>
+                                <td style="width: 10%;"><div class="gradient-bar"></div></td>
+                                <td style="width: 10%;">{{ weather_data['forecast']['forecastday'][2]['day']['maxtemp_c'] | round(0, 'floor') | int }}°</td>
+                            </tr>
+                        </table>
+                    </div>
+                    </br>
+                    <div class="child" id="uv">
+                        <p>UV</p>
+                        {% set uv = weather_data['current']['uv'] %}
+                        {% if uv <= 2 %}
+                            <h1>Weak</h1>
+                        {% elif uv <= 5 %}
+                            <h1>Normal</h1>
+                        {% elif uv <= 7 %}
+                            <h1>High</h1>
+                        {% elif uv <= 10 %}
+                            <h1>Very High</h1>
+                        {% else %}
+                            <h1>Extreme</h1>
+                        {% endif %}
+                        <h2>{{ weather_data['current']['uv'] }}</h2>
+                    </div>
+                    <div class="child" id="humidity">
+                        <p>Humidity</p>
+                        <h1>{{ weather_data['current']['humidity'] }}%</h1>
+                        <img src="/static/j.png">
+                    </div>
+                    </br>
+                    <div class="child" id="rf">
+                        <p>Real Feel</p>
+                        <h1>{{ weather_data['current']['feelslike_c'] | round(0, 'floor') | int }}°</h1>
+                        <img src="/static/k.png">
+                    </div>
+                    <div class="child" id="wind">
+                        <p>{{ weather_data['current']['wind_dir']}}</p>
+                        <h1>{{ weather_data['current']['wind_kph']}}</h1>
+                        <img src="/static/cp.png">
+                    </div>
+                    </br>
+                    <div class="child" id="ss">
+                        <p>Sunset</p>
+                        <h1>{{ weather_data['forecast']['forecastday'][0]['astro']['sunset'] }}</h1></br>
+                        <img src="/static/ss.png">
+                    </div>
+                    <div class="child" id="p">
+                        <p>Pressure</p>
+                        <h1>{{ weather_data['current']['pressure_mb']  | round(0, 'floor') | int }}</h1></br>
+                        <img src="/static/p1.png">
+                    </div>
+                </div>
+            </center>
+        {% endif %}
+    {% endif %}
+    </br></br>
+    <div id="we">
+        <form method="GET" action="/">
+            <input type="text" name="city" id="cityInput" placeholder="Enter City Name With Country">
+            <button type="submit">Get Weather</button>
+        </form>
+        </br></br>
+    </div>
+    </br></br></br>
+    <button id="getLocation" class="button">
+        <svg class="svgIcon" viewBox="0 0 512 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm50.7-186.9L162.4 380.6c-19.4 7.5-38.5-11.6-31-31l55.5-144.3c3.3-8.5 9.9-15.1 18.4-18.4l144.3-55.5c19.4-7.5 38.5 11.6 31 31L325.1 306.7c-3.2 8.5-9.9 15.1-18.4 18.4zM288 256a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z"></path></svg>
+        Use My Location
+    </button>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
