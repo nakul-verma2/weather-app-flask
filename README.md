@@ -44,7 +44,8 @@ A sleek and user-friendly web application to display current weather conditions,
     pip install -r requirements.txt
     ```
 3. Set up your Weather API key:
-    Obtain an API key from your preferred weather API provider [WeatherAPI](https://www.weatherapi.com/).
+
+    - Obtain an API key from your preferred weather API provider [WeatherAPI](https://www.weatherapi.com/).
     Add the API key to your app.py file.
     ```python
     API_KEY = "<YOUR-API-KEY>"
