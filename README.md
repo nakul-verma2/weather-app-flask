@@ -47,7 +47,7 @@ A sleek and user-friendly web application to display current weather conditions,
     Obtain an API key from your preferred weather API provider [WeatherAPI](https://www.weatherapi.com/).
     Add the API key to your app.py file.
     ```python
-    API_KEY = "<YOUR-API-KEY"
+    API_KEY = "<YOUR-API-KEY>"
     ```
 4. Run the application:
     ```bash
