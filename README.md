@@ -65,13 +65,13 @@ A sleek and user-friendly web application to display current weather conditions,
 ## 🌐 App Live On Using [Render](https://render.com/)
 
 **Experience the live app:**
-[Weather App Live](https://weather-app-flask-z76j.onrender.com)  
+[Weather App Live](https://weather-app-jqak.onrender.com/)  
 
 ## 📸 Screenshots
+![Screenshot 2024-12-15 at 12 04 26 PM](https://github.com/user-attachments/assets/af39ed65-c477-4c82-8a87-785acb511a7f)
+![Screenshot 2024-12-15 at 12 05 12 PM](https://github.com/user-attachments/assets/9af22426-07a1-4967-b6e6-2fa1714ea39b)
 
-![Screenshot 2024-12-15 at 12 04 26 PM](https://github.com/user-attachments/assets/aa910f54-926e-4f0d-bfda-fa0c1ad07bde)
 
-![Screenshot 2024-12-15 at 12 05 12 PM](https://github.com/user-attachments/assets/ec90a83e-51bd-4dfa-85fc-2dee5894ef5e)
 
 ## 🎉 Contributing
 Feel free to open issues or submit pull requests to enhance the functionality of the App.
